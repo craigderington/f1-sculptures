@@ -1,0 +1,30 @@
+# Development overrides for docker-compose
+# Usage: docker-compose -f docker-compose.yml -f docker-compose.dev.yml up
+
+services:
+  api:
+    volumes:
+      - ./backend:/app/backend  # Remove :ro for hot reload in development
+    environment:
+      - LOG_LEVEL=DEBUG
+    command: uvicorn backend.main:app --host 0.0.0.0 --port 8000 --reload --log-level debug
+
+  celery_worker:
+    volumes:
+      - ./backend:/app/backend  # Remove :ro
+    environment:
+      - LOG_LEVEL=DEBUG
+    command: celery -A backend.tasks.celery_app worker --loglevel=debug --concurrency=1
+
+  # Development-only services
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    container_name: f1-redis-commander
+    environment:
+      - REDIS_HOSTS=local:redis:6379
+    ports:
+      - "8081:8081"
+    depends_on:
+      - redis
+    networks:
+      - f1-network

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>F1 G-Force Sculpture Gallery - Async Edition</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div id="container">
+        <div id="canvas-container"></div>
+
+        <!-- Controls Panel -->
+        <div id="controls">
+            <h1><span style="font-size: 1.5em;">🏎️</span> F1 G-Force Sculpture</h1>
+
+            <div class="control-group">
+                <label for="year">Year</label>
+                <select id="year">
+                    <option value="2025">2025</option>
+                    <option value="2024">2024</option>
+                    <option value="2023">2023</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label for="event">Grand Prix</label>
+                <select id="event">
+                    <option value="">Select year first...</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label for="session">Session</label>
+                <select id="session">
+                    <option value="">Select event first...</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label for="driver">Driver</label>
+                <select id="driver">
+                    <option value="">Select session first...</option>
+                </select>
+            </div>
+
+            <button id="load-sculpture">Generate Sculpture</button>
+            <button id="reset-camera">Reset Camera</button>
+        </div>
+
+        <!-- Toggle Controls Button -->
+        <div id="toggle-controls">☰</div>
+
+        <!-- Statistics Panel -->
+        <div id="info">
+            <h3>Sculpture Stats</h3>
+            <div class="stat">
+                <span class="stat-label">Driver:</span>
+                <span class="stat-value" id="stat-driver">-</span>
+            </div>
+            <div class="stat">
+                <span class="stat-label">Lap Time:</span>
+                <span class="stat-value" id="stat-laptime">-</span>
+            </div>
+            <div class="stat">
+                <span class="stat-label">Max G-Force:</span>
+                <span class="stat-value" id="stat-maxg">-</span>
+            </div>
+            <div class="stat">
+                <span class="stat-label">Avg G-Force:</span>
+                <span class="stat-value" id="stat-avgg">-</span>
+            </div>
+            <div class="stat">
+                <span class="stat-label">Max Speed:</span>
+                <span class="stat-value" id="stat-speed">-</span>
+            </div>
+        </div>
+
+        <!-- Progress Overlay (NEW) -->
+        <div id="loading-overlay" class="loading-overlay">
+            <div class="progress-container">
+                <div class="progress-stage"></div>
+
+                <div class="progress-bar-container">
+                    <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+
+                <div class="progress-percentage">0%</div>
+                <div class="progress-text"></div>
+
+                <button class="cancel-button">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Three.js Import Map -->
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+        }
+    }
+    </script>
+
+    <!-- Application Modules -->
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>

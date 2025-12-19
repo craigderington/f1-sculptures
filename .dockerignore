@@ -1,0 +1,59 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Virtual environments
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Git
+.git/
+.gitignore
+
+# Docker
+Dockerfile
+docker-compose*.yml
+.dockerignore
+
+# Documentation
+*.md
+!backend/README.md
+
+# Tests
+tests/
+*.test.py
+.pytest_cache/
+
+# Cache and temporary files
+*.log
+*.cache
+.cache/
+tmp/
+temp/
+
+# Environment
+.env
+.env.local
+
+# FastF1 cache (will be in volume)
+cache/
+fastf1_cache/

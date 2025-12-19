@@ -1,0 +1,356 @@
+/* F1 G-Force Sculpture Gallery - Styles */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+    color: #fff;
+    overflow-x: hidden;
+}
+
+#container {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+}
+
+#canvas-container {
+    width: 100%;
+    height: 100%;
+}
+
+/* Controls Panel */
+#controls {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    max-width: 400px;
+    z-index: 100;
+}
+
+#controls h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #FF8700;
+    text-shadow: 0 0 10px rgba(255, 135, 0, 0.5);
+}
+
+.control-group {
+    margin-bottom: 15px;
+}
+
+.control-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: #aaa;
+}
+
+select, button {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #333;
+    background: #1a1a1a;
+    color: #fff;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+select:hover, button:hover {
+    border-color: #FF8700;
+    background: #252525;
+}
+
+button {
+    background: #FF8700;
+    border: none;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+button:hover {
+    background: #FFA500;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 135, 0, 0.4);
+}
+
+button:disabled {
+    background: #555;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Info Panel */
+#info {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 15px;
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    min-width: 250px;
+}
+
+#info h3 {
+    color: #FF8700;
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+#info p {
+    font-size: 13px;
+    margin: 5px 0;
+    color: #ccc;
+}
+
+.stat {
+    display: flex;
+    justify-content: space-between;
+    margin: 5px 0;
+}
+
+.stat-label {
+    color: #888;
+}
+
+.stat-value {
+    color: #FF8700;
+    font-weight: bold;
+}
+
+/* Toggle Controls Button */
+#toggle-controls {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    z-index: 101;
+}
+
+/* Progress Overlay - NEW */
+.loading-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.loading-overlay.active {
+    display: flex;
+}
+
+.progress-container {
+    background: rgba(26, 26, 46, 0.95);
+    padding: 40px;
+    border-radius: 15px;
+    min-width: 450px;
+    text-align: center;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+.progress-stage {
+    font-size: 24px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    min-height: 40px;
+}
+
+.stage-icon {
+    font-size: 32px;
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.1); opacity: 0.8; }
+}
+
+.stage-label {
+    color: #fff;
+    font-weight: 600;
+}
+
+.progress-bar-container {
+    width: 100%;
+    height: 30px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    overflow: hidden;
+    margin-bottom: 15px;
+    position: relative;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+    transition: width 0.5s ease, background-color 0.3s ease;
+    border-radius: 15px;
+    position: relative;
+}
+
+.progress-bar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+.progress-text {
+    font-size: 14px;
+    color: #aaa;
+    margin-bottom: 20px;
+    min-height: 20px;
+}
+
+.progress-percentage {
+    font-size: 18px;
+    color: #FF8700;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.cancel-button {
+    padding: 10px 30px;
+    background: #ef4444;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s;
+}
+
+.cancel-button:hover {
+    background: #dc2626;
+    transform: translateY(-2px);
+}
+
+/* Error State */
+.error-container {
+    text-align: center;
+    padding: 20px;
+}
+
+.error-icon {
+    font-size: 48px;
+    margin-bottom: 20px;
+}
+
+.error-message {
+    font-size: 16px;
+    color: #ef4444;
+    margin-bottom: 20px;
+    max-width: 400px;
+}
+
+.error-container button {
+    padding: 10px 30px;
+    background: #3b82f6;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+/* Old loading spinner (keep for compatibility) */
+#loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+    color: #FF8700;
+    text-align: center;
+    display: none;
+}
+
+.spinner {
+    border: 3px solid rgba(255, 255, 255, 0.1);
+    border-top: 3px solid #FF8700;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 20px auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Utility Classes */
+.hidden {
+    display: none !important;
+}
+
+/* Stage-specific colors */
+.progress-bar.stage-loading-session {
+    background: linear-gradient(90deg, #3b82f6, #60a5fa);
+}
+
+.progress-bar.stage-extracting-telemetry {
+    background: linear-gradient(90deg, #f59e0b, #fbbf24);
+}
+
+.progress-bar.stage-processing-sculpture {
+    background: linear-gradient(90deg, #10b981, #34d399);
+}
+
+/* WebSocket connection indicator */
+.ws-indicator {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #10b981;
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+}
+
+.ws-indicator.disconnected {
+    background: #ef4444;
+    box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
+}
+
+.ws-indicator.connecting {
+    background: #f59e0b;
+    box-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
+    animation: pulse 1s infinite;
+}
