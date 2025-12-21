@@ -4,7 +4,12 @@
  */
 
 class F1API {
-    constructor(baseUrl = 'http://localhost:8000/api') {
+    constructor(baseUrl = null) {
+        // Auto-detect: use relative URL for production, localhost:8000 for local dev
+        if (!baseUrl) {
+            const isLocalDev = window.location.hostname === 'localhost' && window.location.port === '3000';
+            baseUrl = isLocalDev ? 'http://localhost:8000/api' : '/api';
+        }
         this.baseUrl = baseUrl;
     }
 

@@ -20,7 +20,11 @@ class TaskWebSocket {
      * Connect to WebSocket server
      */
     connect() {
-        const wsUrl = `ws://localhost:8000/ws/tasks/${this.taskId}`;
+        // Auto-detect: use localhost:8000 for local dev, same-origin for production
+        const isLocalDev = window.location.hostname === 'localhost' && window.location.port === '3000';
+        const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+        const wsHost = isLocalDev ? 'localhost:8000' : window.location.host;
+        const wsUrl = `${wsProtocol}//${wsHost}/ws/tasks/${this.taskId}`;
 
         try {
             this.ws = new WebSocket(wsUrl);
