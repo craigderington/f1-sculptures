@@ -182,6 +182,16 @@ class SceneManager {
 
         const driverName = driver ? driver.abbreviation : 'Driver';
 
+        // Apply driver-specific team colors to tooltip
+        if (driver && driver.teamName) {
+            const teamColors = getTeamColors(driver.teamName);
+            // Set CSS custom properties on this specific tooltip element
+            this.tooltip.style.setProperty('--tooltip-primary', teamColors.primary);
+            this.tooltip.style.setProperty('--tooltip-secondary', teamColors.secondary);
+            this.tooltip.style.setProperty('--tooltip-accent', teamColors.accent);
+            this.tooltip.style.borderColor = teamColors.primary;
+        }
+
         this.tooltip.innerHTML = `
             <div class="gforce-tooltip-header">
                 ${driverName} - Telemetry Data
@@ -217,7 +227,7 @@ class SceneManager {
         // Add to DOM
         document.body.appendChild(this.tooltip);
 
-        console.log('Showing tooltip for vertex:', vertex);
+        console.log('Showing tooltip for vertex:', vertex, 'Team:', driver?.teamName);
     }
 
     /**
