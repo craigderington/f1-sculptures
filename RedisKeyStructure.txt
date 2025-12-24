@@ -1,0 +1,69 @@
+📊 Redis Storage Deep Dive
+
+  Key Structure
+
+  Pattern: f1:sculpture:{year}:{round}:{session}:{driver}
+  Example: f1:sculpture:2025:24:Q:VER
+           └─────────┘ └──┘ └──┘ └┘ └─┘
+           namespace  year round sess driver
+
+  Data Structure (JSON)
+
+  {
+    "vertices": [
+      {
+        "x": -41.50,           // Normalized X position on track
+        "y": 2.70,             // Normalized Y position on track
+        "z": 100.64,           // Height (G-force × 20 for visibility)
+        "distance": 0.51,      // Distance from start (meters)
+        "speed": 237.0,        // Speed at this point (km/h)
+        "gForce": 5.03,        // Combined G-force magnitude
+        "longG": 0.57,         // Longitudinal G (accel/brake)
+        "latG": 5.00           // Lateral G (cornering)
+      },
+      // ... 600-900 more vertices per lap
+    ],
+    "driver": {
+      "abbreviation": "VER",
+      "lapTime": "0 days 00:01:22.207000",
+      "compound": "SOFT",
+      "teamName": "Red Bull Racing"
+    }
+  }
+
+  Storage Stats
+
+  | Metric                   | Value                     |
+  |--------------------------|---------------------------|
+  | Sculptures Cached        | 77                        |
+  | Average Size             | 165 KB (210-230 KB range) |
+  | Vertices per Sculpture   | 617-889 points            |
+  | TTL                      | 24 hours (86,400 seconds) |
+  | Total Redis Memory       | 45.74 MB                  |
+  | Estimated Sculpture Size | ~12 MB                    |
+
+  Current Cache Coverage
+
+  Round 24 (Abu Dhabi): 26 drivers
+  Round 23 (Qatar):     26 drivers
+  Round 22 (Las Vegas): 25 drivers
+
+  Sessions: Q (Qualifying) + R (Race)
+  Drivers: VER, HAM, LEC, NOR, PIA, RUS, SAI, ALO, STR, OCO, GAS, TSU, ALB, etc.
+
+  Performance Comparison
+
+  | Scenario          | Time            | Source                       |
+  |-------------------|-----------------|------------------------------|
+  | First Request     | 30-60s          | FastF1 download + processing |
+  | Cached Request    | <100ms          | Redis direct retrieval       |
+  | Speed Improvement | 300-600x faster | 🚀                           |
+
+  Why This Works Well
+
+  1. JSON Format - Easy to parse in JavaScript frontend
+  2. Normalized Coordinates - Ready for Three.js rendering
+  3. Complete Data - All telemetry points + metadata in one key
+  4. Reasonable Size - 165 KB is small enough to transfer quickly
+  5. Auto-Expiry - 24hr TTL prevents unbounded growth
+  6. Predictable Keys - Easy to query and invalidate
